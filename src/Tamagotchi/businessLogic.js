@@ -22,8 +22,12 @@ function getDeathReason (tamagotchi) {
     return "Dirtyness";
   }
 
-  if(tamagotchi.state.hungryness === 100 || tamagotchi.state.tiredness === 100) {
-    return "hungry/tired";
+  if(tamagotchi.state.hungryness === 100) {
+    return "hungry";
+  }
+
+  if(tamagotchi.state.tiredness === 100) {
+    return "tired";
   }
 }
 
