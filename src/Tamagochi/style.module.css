@@ -1,0 +1,39 @@
+.emoji {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 50px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.screen {
+  position: relative;
+  height: 100%
+}
+
+.stat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12px;
+}
+
+.stat span {
+  font-size: 9px;
+  width: 30%;
+}
+
+.stat progress {
+  width: 64%;
+}
+
+.pooStack {
+  position: absolute;
+  right: 4px;
+  bottom: 30px;
+}
