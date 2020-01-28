@@ -20,3 +20,12 @@
   right: 4px;
   bottom: 30px;
 }
+
+.deathText {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  width: 118px;
+  text-align: center;
+  font-size: 10px;
+}

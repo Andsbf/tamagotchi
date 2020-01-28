@@ -19,7 +19,7 @@ function getDeathReason(tamagotchi) {
   }
 
   if (tamagotchi.state.pooCount === 3) {
-    return "Dirtyness";
+    return "Dirtiness";
   }
 
   if (tamagotchi.state.hungryness === 100) {

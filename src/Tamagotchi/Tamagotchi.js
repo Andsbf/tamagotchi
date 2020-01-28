@@ -20,6 +20,7 @@ class Tamagotchi extends Component {
   static POO_FREQ = 20; /* ticks */
   static SLEEP_FREQ = 20; /* ticks */
 
+  /*  generates a random schedule of events for specifed frequency */
   static generateSchedule(frequency) {
     const framesCount = Math.floor(Tamagotchi.LIFE_SPAN / frequency);
 
@@ -154,8 +155,6 @@ class Tamagotchi extends Component {
     }
   };
 
-  start;
-
   getButtons = () => {
     const actions = {
       start: { text: "start", click: this.start },
@@ -194,9 +193,10 @@ class Tamagotchi extends Component {
               dangerouslySetInnerHTML={{ __html: this.getImg() }}
             />
             {this.hasPoo && <PooPile count={this.state.pooCount} />}
+            {this.isDead && <div className={style.deathText}>Death cause: {this.state.deathReason}</div>}
           </div>
         </Background>
-        <div>Death cause: {this.state.deathReason}</div>
+
       </div>
     );
   }
