@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
-import Tamagochi from "./Tamagochi";
+import Tamagotchi from "./Tamagotchi";
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Tamagochi />
+      <Tamagotchi />
     </div>
   );
 }

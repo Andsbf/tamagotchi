@@ -7,19 +7,19 @@ import emojis from "./emojis";
 import { getNextState } from "./businessLogic"
 
 
-class Tamagochi extends Component {
+class Tamagotchi extends Component {
   static TIME_TICK_PER_SECOND = 2;
   static LIFE_SPAN = 180; /* time ticks */
   static HUNGRY_PERIOD = 30 /* in seconds, how often it has to eat at least once */
-  static HUNGRY_INCREMENT = 100 / (Tamagochi.TIME_TICK_PER_SECOND * Tamagochi.HUNGRY_PERIOD);
+  static HUNGRY_INCREMENT = 100 / (Tamagotchi.TIME_TICK_PER_SECOND * Tamagotchi.HUNGRY_PERIOD);
   static TIRED_PERIOD = 30 /* in seconds, how often it has to sleep at least once */
-  static TIRED_INCREMENT = 100 / (Tamagochi.TIME_TICK_PER_SECOND * Tamagochi.TIRED_PERIOD);
+  static TIRED_INCREMENT = 100 / (Tamagotchi.TIME_TICK_PER_SECOND * Tamagotchi.TIRED_PERIOD);
   static FOOD_SIZE = 50;
   static POO_FREQ = 20 /* ticks */
   static SLEEP_FREQ = 20 /* ticks */
 
   static generateSchedule (frequency) {
-    const framesCount = Math.floor(Tamagochi.LIFE_SPAN / frequency);
+    const framesCount = Math.floor(Tamagotchi.LIFE_SPAN / frequency);
 
     return range(0, framesCount - 1).map(i => (frequency * i) + random(0,frequency));
   }
@@ -43,7 +43,7 @@ class Tamagochi extends Component {
     },
     dead: {
       emoji: emojis.skull,
-      tickLimit: Tamagochi.LIFE_SPAN
+      tickLimit: Tamagotchi.LIFE_SPAN
     }
   }
 
@@ -52,8 +52,8 @@ class Tamagochi extends Component {
 
     const {pooSchedule, sleepSchedule} =
 
-    this.pooSchedule = Tamagochi.generateSchedule(Tamagochi.POO_FREQ);
-    this.sleepSchedule = Tamagochi.generateSchedule(Tamagochi.SLEEP_FREQ);
+    this.pooSchedule = Tamagotchi.generateSchedule(Tamagotchi.POO_FREQ);
+    this.sleepSchedule = Tamagotchi.generateSchedule(Tamagotchi.SLEEP_FREQ);
     this.timeTick = 0;
     this.interval = null;
 
@@ -83,7 +83,7 @@ class Tamagochi extends Component {
   }
 
   start = () => {
-    const timeInterval = 1000 / Tamagochi.TIME_TICK_PER_SECOND;
+    const timeInterval = 1000 / Tamagotchi.TIME_TICK_PER_SECOND;
 
     this.interval = setInterval(this.processTimeStep , timeInterval)
   }
@@ -107,7 +107,7 @@ class Tamagochi extends Component {
 
   feed = () => {
     this.setState({
-      hungryness: Math.max(this.state.hungryness - Tamagochi.FOOD_SIZE, 0),
+      hungryness: Math.max(this.state.hungryness - Tamagotchi.FOOD_SIZE, 0),
       awakeTick: null
     })
   }
@@ -132,20 +132,20 @@ class Tamagochi extends Component {
       case this.isSleeping:
         return emojis.Zzz;
 
-      case (this.timeTick >= Tamagochi.STAGES.dead.tickLimit):
-        return Tamagochi.STAGES.dead.emoji;
+      case (this.timeTick >= Tamagotchi.STAGES.dead.tickLimit):
+        return Tamagotchi.STAGES.dead.emoji;
 
-      case (this.timeTick >= Tamagochi.STAGES.rooster.tickLimit):
-        return Tamagochi.STAGES.rooster.emoji;
+      case (this.timeTick >= Tamagotchi.STAGES.rooster.tickLimit):
+        return Tamagotchi.STAGES.rooster.emoji;
 
-      case (this.timeTick >= Tamagochi.STAGES.chick.tickLimit):
-        return Tamagochi.STAGES.chick.emoji;
+      case (this.timeTick >= Tamagotchi.STAGES.chick.tickLimit):
+        return Tamagotchi.STAGES.chick.emoji;
 
-      case (this.timeTick >= Tamagochi.STAGES.hatching.tickLimit):
-        return Tamagochi.STAGES.hatching.emoji;
+      case (this.timeTick >= Tamagotchi.STAGES.hatching.tickLimit):
+        return Tamagotchi.STAGES.hatching.emoji;
 
-      case (this.timeTick >= Tamagochi.STAGES.egg.tickLimit):
-        return Tamagochi.STAGES.egg.emoji;
+      case (this.timeTick >= Tamagotchi.STAGES.egg.tickLimit):
+        return Tamagotchi.STAGES.egg.emoji;
 
       default: console.log("ERROR: Unmapped stage");
       }
@@ -225,8 +225,8 @@ class Tamagochi extends Component {
   }
 };
 
-Tamagochi.displayName = "Tamagochi";
+Tamagotchi.displayName = "Tamagotchi";
 
-Tamagochi.propTypes = {};
+Tamagotchi.propTypes = {};
 
-export default Tamagochi;
+export default Tamagotchi;
