@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import Background from "./Background";
 import style from "./style.module.css";
 import { random, range, isNil } from "../lib";
-import PropTypes from "prop-types";
 import emojis from "./emojis";
-import { getNextState } from "./businessLogic"
+import { getNextState } from "./TamagotchiUtils";
 import Bars from "./Bars";
 import PooPile from "./PooPile";
 
@@ -193,7 +192,7 @@ class Tamagotchi extends Component {
           </div>
         </Background>
         <div>
-          Death reason: {this.state.deathReason}
+          Death cause: {this.state.deathReason}
         </div>
       </div>
     );
