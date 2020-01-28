@@ -14,7 +14,6 @@ test("renders the tired bar", () => {
   expect(hungryBar).toBeInTheDocument();
 });
 
-
 test("renders the initial egg", () => {
   const { getByText } = render(<Tamagotchi />);
   const egg = getByText(/🥚/i);
@@ -31,6 +30,6 @@ test("starts the tamagochi once the button is clicked", async () => {
   const { getByText, getByTestId } = render(<Tamagotchi />);
   fireEvent.click(getByTestId("buttonB"));
 
-  const feedButton = await waitForElement(()=> getByText(/feed/i))
+  const feedButton = await waitForElement(() => getByText(/feed/i));
   expect(feedButton).toBeInTheDocument();
 });

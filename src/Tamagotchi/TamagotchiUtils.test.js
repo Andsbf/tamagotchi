@@ -3,7 +3,7 @@ import { getNextState } from "./TamagotchiUtils";
 
 describe("getNextState", () => {
   test("returns deathReason: Age, if tamagochi has reach life span", () => {
-    const result = getNextState({timeTick: Tamagotchi.LIFE_SPAN})
+    const result = getNextState({ timeTick: Tamagotchi.LIFE_SPAN });
 
     expect(result).toEqual({
       deathReason: "Age"
@@ -11,7 +11,9 @@ describe("getNextState", () => {
   });
 
   test("returns deathReason: Dirtiness, if tamagochi has reach max poo count", () => {
-    const result = getNextState({ state: { pooCount: Tamagotchi.MAX_POO_COUNT } })
+    const result = getNextState({
+      state: { pooCount: Tamagotchi.MAX_POO_COUNT }
+    });
 
     expect(result).toEqual({
       deathReason: "Dirtiness"
@@ -19,7 +21,7 @@ describe("getNextState", () => {
   });
 
   test("returns deathReason: hungry, if tamagochi has reach max hungry level", () => {
-    const result = getNextState({ state: { hungryness: 100 } })
+    const result = getNextState({ state: { hungryness: 100 } });
 
     expect(result).toEqual({
       deathReason: "Hungry"
@@ -27,7 +29,7 @@ describe("getNextState", () => {
   });
 
   test("returns deathReason: tired, if tamagochi has reach max tired level", () => {
-    const result = getNextState({ state: { tiredness: 100 } })
+    const result = getNextState({ state: { tiredness: 100 } });
 
     expect(result).toEqual({
       deathReason: "Tired"
@@ -35,7 +37,12 @@ describe("getNextState", () => {
   });
 
   test("increments pooCount, if there is poo scheduled for that tick", () => {
-    const result = getNextState({ state: { pooCount: 2 }, timeTick: 1, pooSchedule: [1], sleepSchedule: [] })
+    const result = getNextState({
+      state: { pooCount: 2 },
+      timeTick: 1,
+      pooSchedule: [1],
+      sleepSchedule: []
+    });
 
     expect(result.pooCount).toEqual(3);
   });
@@ -46,14 +53,18 @@ describe("getNextState", () => {
       timeTick: 1,
       pooSchedule: [2],
       sleepSchedule: []
-    })
+    });
 
     expect(result.pooCount).toEqual(2);
   });
 
   test("increments hungry", () => {
-    const result = getNextState({ state: { hungryness: 10 }, pooSchedule: [1], sleepSchedule: [] })
+    const result = getNextState({
+      state: { hungryness: 10 },
+      pooSchedule: [1],
+      sleepSchedule: []
+    });
 
     expect(result.hungryness > 10).toEqual(true);
   });
-})
+});

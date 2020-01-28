@@ -17,7 +17,7 @@ const Background = ({ children, buttonsActions = [] }) => {
       const button = buttonsActions[index] || emptyButton;
 
       return (
-        <div className={style.buttonWrapper} key={index} >
+        <div className={style.buttonWrapper} key={index}>
           <div className={style.buttonText}>{button.text}</div>
           <div
             className={`${style.button} ${buttonClassName}`}
