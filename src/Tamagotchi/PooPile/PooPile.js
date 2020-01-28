@@ -3,12 +3,12 @@ import style from "./style.module.css";
 import emojis from "../emojis";
 import { range } from "../../lib";
 
-const PooPile = ({count}) => {
-  return(
-    <div  className={style.pooPile}>
-      {range(count).map((_, index) =>
-        <div dangerouslySetInnerHTML={{__html: emojis.poo}} key={index}/>
-      )}
+const PooPile = ({ count }) => {
+  return (
+    <div className={style.pooPile}>
+      {range(count).map((_, index) => (
+        <div dangerouslySetInnerHTML={{ __html: emojis.poo }} key={index} />
+      ))}
     </div>
   );
 };

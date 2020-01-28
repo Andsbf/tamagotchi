@@ -1,6 +1,1 @@
-export {
-  isNil,
-  random,
-  range,
-  noop
-} from "lodash";
+export { isNil, random, range, noop } from "lodash";

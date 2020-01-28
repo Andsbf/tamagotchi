@@ -5,26 +5,18 @@ import { noop } from "../../lib";
 const emptyButton = {
   text: "",
   click: noop
-}
+};
 
 const Background = ({ children, buttonsActions = [] }) => {
   const getButtons = () => {
-    const buttonsClassNames = [
-      style.buttonA,
-      style.buttonB,
-      style.buttonC
-    ]
+    const buttonsClassNames = [style.buttonA, style.buttonB, style.buttonC];
 
-    return buttonsClassNames.map((buttonClassName,index) => {
+    return buttonsClassNames.map((buttonClassName, index) => {
       const button = buttonsActions[index] || emptyButton;
 
       return (
         <div className={style.buttonWrapper} key={index}>
-          <div
-            className={style.buttonText}
-          >
-            {button.text}
-          </div>
+          <div className={style.buttonText}>{button.text}</div>
           <div
             className={`${style.button} ${buttonClassName}`}
             onClick={button.click}
@@ -32,7 +24,7 @@ const Background = ({ children, buttonsActions = [] }) => {
         </div>
       );
     });
-  }
+  };
 
   return (
     <div className={style.tamagotchi}>
@@ -53,16 +45,12 @@ const Background = ({ children, buttonsActions = [] }) => {
             <div className={style.crack__line}></div>
           </div>
 
-          <div className={style.screen__inner}>
-            {children}
-          </div>
+          <div className={style.screen__inner}>{children}</div>
         </div>
-        <div className={style.buttons}>
-          {getButtons()}
-        </div>
+        <div className={style.buttons}>{getButtons()}</div>
       </div>
     </div>
   );
-}
+};
 
 export default Background;

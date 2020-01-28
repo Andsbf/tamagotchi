@@ -8,20 +8,24 @@ import Bars from "./Bars";
 import PooPile from "./PooPile";
 
 class Tamagotchi extends Component {
-  static TIME_TICK_PER_SECOND = 2;
+  static TICKS_PER_SECOND = 2;
   static LIFE_SPAN = 180; /* time ticks */
-  static HUNGRY_PERIOD = 30 /* in seconds, how often it has to eat at least once */
-  static HUNGRY_INCREMENT = 100 / (Tamagotchi.TIME_TICK_PER_SECOND * Tamagotchi.HUNGRY_PERIOD);
-  static TIRED_PERIOD = 30 /* in seconds, how often it has to sleep at least once */
-  static TIRED_INCREMENT = 100 / (Tamagotchi.TIME_TICK_PER_SECOND * Tamagotchi.TIRED_PERIOD);
+  static HUNGRY_PERIOD = 30; /* in seconds, how often it has to eat at least once */
+  static HUNGRY_INCREMENT =
+    100 / (Tamagotchi.TICKS_PER_SECOND * Tamagotchi.HUNGRY_PERIOD);
+  static TIRED_PERIOD = 30; /* in seconds, how often it has to sleep at least once */
+  static TIRED_INCREMENT =
+    100 / (Tamagotchi.TICKS_PER_SECOND * Tamagotchi.TIRED_PERIOD);
   static FOOD_SIZE = 50;
-  static POO_FREQ = 20 /* ticks */
-  static SLEEP_FREQ = 20 /* ticks */
+  static POO_FREQ = 20; /* ticks */
+  static SLEEP_FREQ = 20; /* ticks */
 
-  static generateSchedule (frequency) {
+  static generateSchedule(frequency) {
     const framesCount = Math.floor(Tamagotchi.LIFE_SPAN / frequency);
 
-    return range(0, framesCount - 1).map(i => (frequency * i) + random(0,frequency));
+    return range(0, framesCount - 1).map(
+      i => frequency * i + random(0, frequency)
+    );
   }
 
   static STAGES = {
@@ -45,7 +49,7 @@ class Tamagotchi extends Component {
       emoji: emojis.skull,
       tickLimit: Tamagotchi.LIFE_SPAN
     }
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -64,140 +68,139 @@ class Tamagotchi extends Component {
     };
   }
 
-  get hasStarted () {
+  get hasStarted() {
     return !isNil(this.interval);
   }
 
-  get isDead () {
+  get isDead() {
     return this.state.deathReason !== null;
   }
 
-  get isSleeping () {
+  get isSleeping() {
     return this.state.awakeTick !== null;
   }
 
-  get hasPoo () {
+  get hasPoo() {
     return this.state.pooCount > 0;
   }
 
   start = () => {
-    const timeInterval = 1000 / Tamagotchi.TIME_TICK_PER_SECOND;
+    const timeInterval = 1000 / Tamagotchi.TICKS_PER_SECOND;
 
-    this.interval = setInterval(this.processTimeStep , timeInterval)
-  }
+    this.interval = setInterval(this.processTimeStep, timeInterval);
+  };
 
   cleanPoo = () => {
     this.setState({
       pooCount: 0,
-      awakeTick: null,
-    })
-  }
+      awakeTick: null
+    });
+  };
 
   processTimeStep = () => {
     const nextState = getNextState(this);
 
     this.setState(nextState);
 
-    if(!isNil(nextState.deathReason)) {
+    if (!isNil(nextState.deathReason)) {
       clearInterval(this.interval);
     }
-  }
+  };
 
   feed = () => {
     this.setState({
       hungryness: Math.max(this.state.hungryness - Tamagotchi.FOOD_SIZE, 0),
       awakeTick: null
-    })
-  }
+    });
+  };
 
   awake = () => {
     this.setState({
       awakeTick: null
-    })
-  }
+    });
+  };
 
   goSleep = () => {
     this.setState({
-      awakeTick: this.timeTick + random(1,30)
-    })
-  }
+      awakeTick: this.timeTick + random(1, 30)
+    });
+  };
 
   getImg = () => {
-    switch(true) {
+    switch (true) {
       case this.isDead:
         return emojis.skull;
 
       case this.isSleeping:
         return emojis.Zzz;
 
-      case (this.timeTick >= Tamagotchi.STAGES.dead.tickLimit):
+      case this.timeTick >= Tamagotchi.STAGES.dead.tickLimit:
         return Tamagotchi.STAGES.dead.emoji;
 
-      case (this.timeTick >= Tamagotchi.STAGES.rooster.tickLimit):
+      case this.timeTick >= Tamagotchi.STAGES.rooster.tickLimit:
         return Tamagotchi.STAGES.rooster.emoji;
 
-      case (this.timeTick >= Tamagotchi.STAGES.chick.tickLimit):
+      case this.timeTick >= Tamagotchi.STAGES.chick.tickLimit:
         return Tamagotchi.STAGES.chick.emoji;
 
-      case (this.timeTick >= Tamagotchi.STAGES.hatching.tickLimit):
+      case this.timeTick >= Tamagotchi.STAGES.hatching.tickLimit:
         return Tamagotchi.STAGES.hatching.emoji;
 
-      case (this.timeTick >= Tamagotchi.STAGES.egg.tickLimit):
+      case this.timeTick >= Tamagotchi.STAGES.egg.tickLimit:
         return Tamagotchi.STAGES.egg.emoji;
 
-      default: console.log("ERROR: Unmapped stage");
-      }
+      default:
+        console.log("ERROR: Unmapped stage");
     }
+  };
 
-  start
+  start;
 
   getButtons = () => {
     const actions = {
-      start: { text: "start", click: this.start},
-      feed: { text: "Feed", click: this.feed},
-      awake: { text: "Awake", click: this.awake},
-      clean: { text: "Clean", click: this.cleanPoo},
-      sleep: { text: "Sleep", click: this.goSleep},
+      start: { text: "start", click: this.start },
+      feed: { text: "Feed", click: this.feed },
+      awake: { text: "Awake", click: this.awake },
+      clean: { text: "Clean", click: this.cleanPoo },
+      sleep: { text: "Sleep", click: this.goSleep }
+    };
+
+    if (!this.hasStarted) {
+      return [null, actions.start, null];
     }
 
-
-    if(!this.hasStarted) {
-      return [ null, actions.start, null ]
-    }
-
-    if(this.isDead) {
-      return []
+    if (this.isDead) {
+      return [];
     }
 
     return [
       actions.feed,
       this.isSleeping ? actions.awake : actions.sleep,
       this.hasPoo ? actions.clean : null
-    ]
-  }
+    ];
+  };
 
   render() {
-    return(
+    return (
       <div>
-        <Background
-          buttonsActions={this.getButtons()}
-        >
+        <Background buttonsActions={this.getButtons()}>
           <div className={style.screen}>
             <Bars
               hungryness={this.state.hungryness}
               tiredness={this.state.tiredness}
             />
-            <div className={style.emoji} dangerouslySetInnerHTML={{__html: this.getImg()}} />
-            {this.hasPoo && <PooPile count={this.state.pooCount}/>}
+            <div
+              className={style.emoji}
+              dangerouslySetInnerHTML={{ __html: this.getImg() }}
+            />
+            {this.hasPoo && <PooPile count={this.state.pooCount} />}
           </div>
         </Background>
-        <div>
-          Death cause: {this.state.deathReason}
-        </div>
+        <div>Death cause: {this.state.deathReason}</div>
       </div>
     );
   }
-};
+}
 
 Tamagotchi.displayName = "Tamagotchi";
 
