@@ -1,0 +1,15 @@
+.stat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12px;
+}
+
+.stat span {
+  font-size: 9px;
+  width: 30%;
+}
+
+.stat progress {
+  width: 64%;
+}

@@ -5,7 +5,8 @@ import { random, range, isNil } from "../lib";
 import PropTypes from "prop-types";
 import emojis from "./emojis";
 import { getNextState } from "./businessLogic"
-
+import Bars from "./Bars";
+import PooPile from "./PooPile";
 
 class Tamagotchi extends Component {
   static TIME_TICK_PER_SECOND = 2;
@@ -49,8 +50,6 @@ class Tamagotchi extends Component {
 
   constructor(props) {
     super(props);
-
-    const {pooSchedule, sleepSchedule} =
 
     this.pooSchedule = Tamagotchi.generateSchedule(Tamagotchi.POO_FREQ);
     this.sleepSchedule = Tamagotchi.generateSchedule(Tamagotchi.SLEEP_FREQ);
@@ -178,33 +177,6 @@ class Tamagotchi extends Component {
     ]
   }
 
-  renderPooStack = () => {
-    if(!this.hasPoo) {
-      return null
-    }
-
-    return(
-      <div  className={style.pooStack}>
-        {new Array(this.state.pooCount).fill().map( _ =>
-          <div dangerouslySetInnerHTML={{__html: emojis.poo}}/>
-        )}
-      </div>
-    );
-  }
-
-  renderBars = () => {
-    return [
-      <div className={style.stat}>
-        <span>Hungry:</span>
-        <progress max="100" value={this.state.hungryness}/>
-      </div>,
-      <div className={style.stat}>
-        <span>Tired:</span>
-        <progress max="100" value={this.state.tiredness}/>
-      </div>
-    ];
-  }
-
   render() {
     return(
       <div>
@@ -212,9 +184,12 @@ class Tamagotchi extends Component {
           buttonsActions={this.getButtons()}
         >
           <div className={style.screen}>
-            {this.renderBars()}
+            <Bars
+              hungryness={this.state.hungryness}
+              tiredness={this.state.tiredness}
+            />
             <div className={style.emoji} dangerouslySetInnerHTML={{__html: this.getImg()}} />
-            {this.renderPooStack()}
+            {this.hasPoo && <PooPile count={this.state.pooCount}/>}
           </div>
         </Background>
         <div>
