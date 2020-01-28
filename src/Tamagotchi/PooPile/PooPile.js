@@ -1,13 +1,13 @@
 import React from "react";
 import style from "./style.module.css";
-import PropTypes from "prop-types";
 import emojis from "../emojis";
+import { range } from "../../lib";
 
 const PooPile = ({count}) => {
   return(
     <div  className={style.pooPile}>
-      {new Array(count).fill(
-        <div dangerouslySetInnerHTML={{__html: emojis.poo}}/>
+      {range(count).map((_, index) =>
+        <div dangerouslySetInnerHTML={{__html: emojis.poo}} key={index}/>
       )}
     </div>
   );
