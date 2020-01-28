@@ -2,8 +2,6 @@ import Tamagotchi from "./Tamagotchi";
 import { random, isNil } from "../lib";
 
 export const getNextState = tamagotchi => {
-  tamagotchi.timeTick = tamagotchi.timeTick + 1;
-
   const deathReason = getDeathReason(tamagotchi);
 
   if (!isNil(deathReason)) {
@@ -18,16 +16,16 @@ function getDeathReason(tamagotchi) {
     return "Age";
   }
 
-  if (tamagotchi.state.pooCount === 3) {
+  if (tamagotchi.state.pooCount === Tamagotchi.MAX_POO_COUNT) {
     return "Dirtiness";
   }
 
   if (tamagotchi.state.hungryness === 100) {
-    return "hungry";
+    return "Hungry";
   }
 
   if (tamagotchi.state.tiredness === 100) {
-    return "tired";
+    return "Tired";
   }
 }
 
@@ -41,7 +39,9 @@ function getNextStateAttributes(tamagotchi) {
 
   function getNextAwakeTick() {
     if (
+      /* tamagotchi is set to awake up  at this tick*/
       tamagotchi.state.awakeTick === tamagotchi.timeTick ||
+      /* tamagotchi has fully charged its  */
       tamagotchi.state.tiredness === 0
     ) {
       return null;

@@ -9,6 +9,7 @@ import PooPile from "./PooPile";
 
 class Tamagotchi extends Component {
   static TICKS_PER_SECOND = 2;
+  static MAX_POO_COUNT = 3;
   static LIFE_SPAN = 180; /* time ticks */
   static HUNGRY_PERIOD = 30; /* in seconds, how often it has to eat at least once */
   static HUNGRY_INCREMENT =
@@ -99,6 +100,8 @@ class Tamagotchi extends Component {
   };
 
   processTimeStep = () => {
+    this.timeTick += 1;
+
     const nextState = getNextState(this);
 
     this.setState(nextState);
@@ -193,10 +196,13 @@ class Tamagotchi extends Component {
               dangerouslySetInnerHTML={{ __html: this.getImg() }}
             />
             {this.hasPoo && <PooPile count={this.state.pooCount} />}
-            {this.isDead && <div className={style.deathText}>Death cause: {this.state.deathReason}</div>}
+            {this.isDead && (
+              <div className={style.deathText}>
+                Death cause: {this.state.deathReason}
+              </div>
+            )}
           </div>
         </Background>
-
       </div>
     );
   }

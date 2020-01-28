@@ -7,6 +7,8 @@ const emptyButton = {
   click: noop
 };
 
+const buttonsTestId = ["buttonA", "buttonB", "buttonC"];
+
 const Background = ({ children, buttonsActions = [] }) => {
   const getButtons = () => {
     const buttonsClassNames = [style.buttonA, style.buttonB, style.buttonC];
@@ -15,11 +17,12 @@ const Background = ({ children, buttonsActions = [] }) => {
       const button = buttonsActions[index] || emptyButton;
 
       return (
-        <div className={style.buttonWrapper} key={index}>
+        <div className={style.buttonWrapper} key={index} >
           <div className={style.buttonText}>{button.text}</div>
           <div
             className={`${style.button} ${buttonClassName}`}
             onClick={button.click}
+            data-testid={buttonsTestId[index]}
           />
         </div>
       );
